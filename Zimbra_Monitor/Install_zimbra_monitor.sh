@@ -78,9 +78,10 @@ function Update(){
 	fi
 }
 
-function Upgrade (){
-
+function Upgrade (){ 
+	echo 
 }
+
 if test $FUNCTION = "install"
 	then
 		Install
