@@ -50,13 +50,14 @@ function Install(){
 		cat -s /etc/zabbix/zabbix_agentd.conf-bkp | fgrep -v "#" | fgrep -v "Timeout=3"| uniq -u > /etc/zabbix/zabbix_agentd.conf
 
 		echo "Timeout=30" >> /etc/zabbix/zabbix_agentd.conf
+		echo "AllowRoot=1" >> /etc/zabbix/zabbix_agentd.conf
 		echo "UserParameter=AuthFail,/etc/zabbix/scripts/zimbra_monitor.sh authfail" >> /etc/zabbix/zabbix_agentd.conf
 		echo "UserParameter=Mail.Services_Discovery,/etc/zabbix/scripts/zimbra_monitor.sh serv_discovery" >> /etc/zabbix/zabbix_agentd.conf
-		echo "UserParameter=Fila[*],/etc/zabbix/scripts/zimbra_monitor.sh fila $1" >> /etc/zabbix/zabbix_agentd.conf
-		echo "UserParameter=Mail.Services_Status[*],/etc/zabbix/scripts/zimbra_monitor.sh serv_status $1" >> /etc/zabbix/zabbix_agentd.conf
+		echo 'UserParameter=Fila[*],/etc/zabbix/scripts/zimbra_monitor.sh fila $1' >> /etc/zabbix/zabbix_agentd.conf
+		echo 'UserParameter=Mail.Services_Status[*],/etc/zabbix/scripts/zimbra_monitor.sh serv_status $1' >> /etc/zabbix/zabbix_agentd.conf
 		echo "UserParameter=Mail.Sent,/etc/zabbix/scripts/zimbra_monitor.sh sent" >> /etc/zabbix/zabbix_agentd.conf
 		echo "UserParameter=Zimbra_Monitor_Version,/etc/zabbix/scripts/zimbra_monitor.sh version" >> /etc/zabbix/zabbix_agentd.conf
-		echo "UserParameter=Zimbra_Monitor_Update,/etc/zabbix/scripts/Install_zimbra_monitor.sh update $1" >> /etc/zabbix/zabbix_agentd.conf
+		echo 'UserParameter=Zimbra_Monitor_Update,/etc/zabbix/scripts/Install_zimbra_monitor.sh update $1' >> /etc/zabbix/zabbix_agentd.conf
 		echo "UserParameter=Zversion,/etc/zabbix/scripts/zimbra_monitor.sh Zversion" >> /etc/zabbix/zabbix_agentd.conf
 		
 
@@ -68,10 +69,10 @@ function Install(){
 function Update(){
 	git clone https://github.com/SuporteTradein/Zabbix/
 	cd Zabbix/Zimbra_Monitor/
-	chmod +x Install_zimbra_monitor.sh
+	chmod +x *zimbra_monitor.sh
 
 	SUBVERSÃO_ATUAL=$(/etc/zabbix/scripts/zimbra_monitor.sh version | cut -d "." -f 2)
-	SUBVERSÃO_NOVA=$1
+	SUBVERSÃO_NOVA=$(/tmp/Zimbra_Monitor/zimbra_monitor.sh version| cut -d "." -f 2)
 	if test $SUBVERSÃO_ATUAL -lt "$SUBVERSÃO_NOVA"
 		then
 			./Install_zimbra_monitor.sh upgrade

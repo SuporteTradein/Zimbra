@@ -1,5 +1,5 @@
 #!/bin/bash
-#		Versão 1.2
+#		Versão 1.3
 #
 #		zimbra_monitor.sh - Monitoramento Zimbra no Zabbix
 #
@@ -108,42 +108,42 @@ function SenderForce(){
 }
 
 # VARIAVEIS DO MENU
-WHO_CHECK=$1
-PAR_1=$2
-PAR_2=$3
-VERSION="1.2"
-BAD_PAR="
-Opcao invalida -- '$1'
-Use 'zimbra_monitor.sh help' para mais informacoes."
+	WHO_CHECK=$1
+	PAR_1=$2
+	PAR_2=$3
+	VERSION="1.3"
+	BAD_PAR="
+	Opcao invalida -- '$1'
+	Use 'zimbra_monitor.sh help' para mais informacoes."
 
-HELP="
-		Zimbra Monitor $VERSION
-USO: zimbra_monitor.sh [funcao] [parametro 1] [parametro 2] ...
+	HELP="
+			Zimbra Monitor $VERSION
+	USO: zimbra_monitor.sh [funcao] [parametro 1] [parametro 2] ...
 
-FUNÇOES
-	
-	- authfail					Realiza uma consulta nos logs para identificar Ips que estao 
-								realizando ataques forca bruta no zimbra.
-	- filaall					Mostra a fila de email.
-	- Zversion 					Mostra a versao do Zimbra
-			
-FUNÇOES ESPECIAIS	
-	
-	Os comandos seguintes utilizam arquivos especificos para serem realizados,
-	Ler notas no cabeçario do programa. (head -n 50 /etc/zabbix/scripts/zimbra_monitor.sh )
+	FUNÇOES
 		
-	- serv_discovery				Coleta todos os serviços do zimbra.
-	- serv_status					Coleta o status dos serviços do zimbra. 
-	- sent						Consulta quantos emails foram enviados no dia.
-	- senderforce 					Realiza uma consulta de emails em tempo real dos emails enviados.
-	
-OUTRAS FUNÇOES
+		- authfail				Realiza uma consulta nos logs para identificar Ips que estao 
+								realizando ataques forca bruta no zimbra.
+		- filaall				Mostra a fila de email.
+		- Zversion 				Mostra a versao do Zimbra
+				
+	FUNÇOES ESPECIAIS	
+		
+		Os comandos seguintes utilizam arquivos especificos para serem realizados,
+		Ler notas no cabeçario do programa. (head -n 50 /etc/zabbix/scripts/zimbra_monitor.sh )
+			
+		- serv_discovery				Coleta todos os serviços do zimbra.
+		- serv_status					Coleta o status dos serviços do zimbra. 
+		- sent						Consulta quantos emails foram enviados no dia.
+		- senderforce 					Realiza uma consulta de emails em tempo real dos emails enviados.
+		
+	OUTRAS FUNÇOES
 
-	- help						Mostra esta tela de ajuda.
-	- version					Mostra a versao do programa.
-	- update					Checa novas versoes, e atualiza o programa.
-	- install					Instala a ultima versao obtida.
-	
+		- help						Mostra esta tela de ajuda.
+		- version					Mostra a versao do programa.
+		- update					Checa novas versoes, e atualiza o programa.
+		- install					Instala a ultima versao obtida.
+		
 	"
 # AQUI SE INICIA O PROGRAMA, TODAS AS FUNÇÕES SAO CARREGADAS A PARTIR DAQUI.
 
@@ -158,7 +158,7 @@ elif test $WHO_CHECK = "authfail"
 		AuthFail
 elif test $WHO_CHECK = "fila"
 	then
-		Queue $PAR_2
+		Queue $PAR_1
 elif test $WHO_CHECK = "filaall"
 	then
 		Queue_all
