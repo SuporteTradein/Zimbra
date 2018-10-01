@@ -76,7 +76,7 @@ function Services_Discovery(){
 }
 
 function Services_Status(){
-	TARGET=$2
+	TARGET=$PAR_1
 	COUNT_LINE=$(cat /tmp/zmcontrol_status.log | fgrep -v not | fgrep "$TARGET")
 	STATUS_SERVICE=$(echo $COUNT_LINE | rev | cut -d' ' -f 1 | rev )
 	if test $STATUS_SERVICE = "Stopped"
@@ -181,7 +181,7 @@ elif test $WHO_CHECK = "serv_discovery"
 		Services_Discovery
 elif test $WHO_CHECK = "serv_status"
 	then 
-		Services_Status $2
+		Services_Status $PAR_1
 elif test $WHO_CHECK = "Zversion"
 	then
 		cat /etc/zabbix/scripts/zimbra_monitor.conf | fgrep "Zversion=" | cut -d'=' -f 2
