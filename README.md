@@ -1,12 +1,12 @@
-<h1>Zimbra Monitor</>
+<h1>Zimbra Monitor</h1>
 
 Monitoramento de Zimbra com Zabbix
 
-<h2>Requisitos:</>
+<h2>Requisitos:</h2>
 	
 Zabbix Agente, Git
 
-<h2>Instalação:</>
+<h2>Instalação:</h2>
 
 Dentro do diretorio "/tmp"
 
