@@ -1,8 +1,3 @@
-<style type="text/css">
-  p {
-  font-size: 10px;
-  }
- </style>
 <h1>Zimbra Monitor</>
 
 Monitoramento de Zimbra com Zabbix
