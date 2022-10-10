@@ -1,5 +1,5 @@
 #!/bin/bash
-#		Versão 1.3
+#		Versão 1.4
 #
 #		zimbra_monitor.sh - Monitoramento Zimbra no Zabbix
 #
@@ -45,6 +45,8 @@
 #	Matheus.viana 	 26/09/2018 	- 	Versão 1.2, Corrigido a variavel TODAY dentro de função authfail, Removida a Função Blacklist
 #										realocado as funções Install, Update e Upgrade para outro script (Install_zimbra_monitor.sh)
 #										removida a função tryfail
+#
+#	Rafael.Costa	 10/10/2022		-	Adicionado item para verificar número de sessões ativas
 #
 # Licença	: GNU GPL
 #
@@ -107,11 +109,20 @@ function SenderForce(){
 		done
 }
 
+function ActiveSessions(){
+	soap=$(/opt/zimbra/bin/zmsoap -z -v GetSessionsRequest @type=soap | grep -Ev "\<\/?Get" | wc -l)
+	imap=$(/opt/zimbra/bin/zmsoap -z -v GetSessionsRequest @type=imap | grep -Ev "\<\/?Get" | wc -l)
+	admin$(/opt/zimbra/bin/zmsoap -z -v GetSessionsRequest @type=admin | grep -Ev "\<\/?Get" | wc -l)
+	
+	echo $((soap+imap+admin))
+	
+	
+
 # VARIAVEIS DO MENU
 	WHO_CHECK=$1
 	PAR_1=$2
 	PAR_2=$3
-	VERSION="1.3"
+	VERSION="1.4"
 	BAD_PAR="
 	Opcao invalida -- '$1'
 	Use 'zimbra_monitor.sh help' para mais informacoes."
@@ -173,6 +184,9 @@ elif test $WHO_CHECK = "senderforce"
 		test "$RESPOSTA" = "N" && exit
 		test "$RESPOSTA" = "s" && SenderForce
 		test "$RESPOSTA" = "S" && SenderForce
+elif test $WHO_CHECK = "activesessions"
+	then
+		ActiveSessions
 elif test $WHO_CHECK = "sent"
 	then
 		cat /etc/zabbix/scripts/send.txt | wc -l
